@@ -1,0 +1,15 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="transparent", pad="0.25", nodesep="0.35", ranksep="0.35", fontname="Arial"];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=9.5, color="#D9E3F0", fillcolor="#FFFFFF", fontcolor="#17324D", margin="0.12,0.08"];
+  edge [color="#7594B8", penwidth=1.2, arrowsize=0.6];
+  agent [label="AI Agent", fillcolor="#EAF3FF", color="#4593F7"];
+  policy [label="Tool Policy\nPersona + Permission + Confirmation"];
+  registry [label="Tool Registry\nCanonical contracts", fillcolor="#EDFFF4", color="#63C69F"];
+  connector [label="Connector Runtime\nREST • OAuth2 • DB read-only • Webhook • Sync"];
+  systems [label="Hệ thống khách hàng\nERP • CRM • Kho • HRM • Lịch • BI", fillcolor="#F4FFF8"];
+  normalized [label="Kết quả chuẩn hóa\nCanonical response + freshness + source"];
+  audit [label="Audit & Telemetry"];
+  agent -> policy -> registry -> connector -> systems;
+  systems -> connector -> normalized -> agent;
+  policy -> audit [style=dashed]; connector -> audit [style=dashed];
+}

@@ -1,0 +1,19 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="transparent", pad="0.25", nodesep="0.35", ranksep="0.35", fontname="Arial"];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=9.5, color="#D9E3F0", fillcolor="#FFFFFF", fontcolor="#17324D", margin="0.12,0.08"];
+  edge [color="#7594B8", penwidth=1.2, arrowsize=0.6];
+  upload [label="Nguồn gốc\nPDF/DOCX/XLSX/PPTX/Web", fillcolor="#EAF3FF"];
+  parse [label="Phân tích cấu trúc\nTrang • Heading • Table • Layout"];
+  multi [label="Trích xuất đa phương thức\nText • Table • Figure • Formula • Chart"];
+  domain [label="Nhận diện domain\nEntity • Thuật ngữ • Đơn vị • Doc type"];
+  norm [label="Chuẩn hóa\nFact • Relation • Unit • Metadata"];
+  validate [label="Kiểm định\nCoverage • Confidence • Conflict • Authority"];
+  review [label="Human Review\nchỉ khi cần", fillcolor="#FFF9ED", color="#E8B356"];
+  publish [label="Xuất bản tri thức\nVersioned + Provenance", fillcolor="#EDFFF4", color="#63C69F"];
+  index [label="Lập chỉ mục\nVector + Keyword + Metadata + Relation"];
+  upload -> parse -> multi -> domain -> norm -> validate;
+  validate -> review [label="low confidence/conflict"];
+  validate -> publish [label="auto-pass"];
+  review -> publish;
+  publish -> index;
+}

@@ -1,0 +1,38 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad="0.25", nodesep="0.32", ranksep="0.45", fontname="Arial"];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=9.5, color="#D9E3F0", fillcolor="#FFFFFF", fontcolor="#17324D", margin="0.12,0.08"];
+  edge [color="#7594B8", penwidth=1.1, arrowsize=0.6];
+  subgraph cluster_apps { label="ỨNG DỤNG"; color="#D8E7F7"; style="rounded"; admin [label="admin-console", fillcolor="#EEF6FF"]; chat [label="assistant-web", fillcolor="#EEF6FF"]; }
+  subgraph cluster_gateways { label="GATEWAY"; color="#D8E7F7"; style="rounded"; api [label="public-api-gateway", fillcolor="#EAF3FF"]; channel [label="channel-gateway\n(Zalo/Webhook/Channels)", fillcolor="#EAF3FF"]; }
+  subgraph cluster_services { label="DOMAIN SERVICES"; color="#D7EAD8"; style="rounded";
+    access [label="access-service"];
+    catalog [label="knowledge-catalog-service"];
+    ingest [label="knowledge-ingestion-service"];
+    retrieve [label="knowledge-retrieval-service"];
+    agent [label="agent-runtime-service", fillcolor="#E9F7FF", color="#4B9DF8"];
+    integration [label="integration-service", fillcolor="#EDFFF4", color="#63C69F"];
+    analytics [label="analytics-service", fillcolor="#FFF9ED", color="#E8B356"];
+    workflow [label="workflow-service"];
+    audit [label="audit-service"];
+  }
+  subgraph cluster_workers { label="WORKERS"; color="#EFE0C6"; style="rounded";
+    parser [label="document-parser-worker"];
+    mm [label="multimodal-extraction-worker"];
+    norm [label="knowledge-normalization-worker"];
+    indexer [label="search-indexer-worker"];
+    eval [label="knowledge-evaluation-worker"];
+    sync [label="integration-sync-worker"];
+  }
+  bus [label="Message Bus / Queue", shape=cylinder, fillcolor="#F8FAFC"];
+  pg [label="PostgreSQL + pgvector\n(logical DB/schema per service)", shape=cylinder, fillcolor="#F8FAFC"];
+  obj [label="Object Storage\nraw + derived + preview", shape=cylinder, fillcolor="#F8FAFC"];
+  cache [label="Redis / Cache", shape=cylinder, fillcolor="#F8FAFC"];
+  external [label="Hệ thống doanh nghiệp\nCRM • ERP • Inventory • BI • Calendar", fillcolor="#F4FFF8"];
+  admin -> api; chat -> api; channel -> agent;
+  api -> access; api -> catalog; api -> ingest; api -> retrieve; api -> agent; api -> integration; api -> analytics; api -> workflow;
+  agent -> retrieve; agent -> integration; agent -> analytics; agent -> workflow; agent -> access; agent -> audit;
+  ingest -> bus; bus -> parser; parser -> mm; mm -> norm; norm -> indexer; indexer -> retrieve; eval -> bus; sync -> bus;
+  integration -> external [dir=both]; sync -> external [dir=both];
+  catalog -> pg; retrieve -> pg; access -> pg; integration -> pg; analytics -> pg; audit -> pg; workflow -> pg;
+  ingest -> obj; parser -> obj; mm -> obj; retrieve -> cache;
+}

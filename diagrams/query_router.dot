@@ -1,0 +1,14 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad="0.25", nodesep="0.5", ranksep="0.4", fontname="Arial"];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, color="#D9E3F0", fillcolor="#FFFFFF", fontcolor="#17324D", margin="0.14,0.08"];
+  edge [color="#7594B8", penwidth=1.2, arrowsize=0.6];
+  q [label="Câu hỏi người dùng", fillcolor="#EAF3FF"];
+  ctx [label="Identity + Persona + Tenant + Permission"];
+  router [label="Query / Tool Router", fillcolor="#EAF3FF", color="#4593F7"];
+  rag [label="Tri thức / RAG\nSOP • Manual • Policy • Product docs"];
+  ops [label="Dữ liệu nghiệp vụ realtime\nInventory • CRM • ERP • Calendar", fillcolor="#EDFFF4"];
+  bi [label="Phân tích / BI\nRevenue • KPI • Trend • Performance", fillcolor="#FFF9ED"];
+  combine [label="Context Builder + Rerank + Tool Results"];
+  answer [label="LLM Response\nCitation + Freshness + Audit"];
+  q -> ctx -> router; router -> rag; router -> ops; router -> bi; rag -> combine; ops -> combine; bi -> combine; combine -> answer;
+}

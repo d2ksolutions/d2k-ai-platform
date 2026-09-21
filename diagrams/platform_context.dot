@@ -1,0 +1,19 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad="0.3", nodesep="0.45", ranksep="0.55", fontname="Arial"];
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=11, color="#D7E2F0", fillcolor="#FFFFFF", fontcolor="#17324D", margin="0.16,0.10"];
+  edge [color="#6C8EBF", penwidth=1.4, arrowsize=0.7];
+  channels [label="KÊNH TRUY CẬP\nZalo OA • Web • Ứng dụng nội bộ • API", fillcolor="#EAF3FF", color="#83B4F7"];
+  runtime [label="AI AGENT RUNTIME\nNhận diện người dùng • Persona • Policy • Router • LLM", fillcolor="#EAF3FF", color="#4593F7"];
+  knowledge [label="NỀN TẢNG TRI THỨC\nTài liệu • SOP • Manual • Chính sách • Thực thể • Quan hệ", fillcolor="#F3F8FF"];
+  tools [label="NỀN TẢNG TÍCH HỢP / TOOL\nCRM • ERP • Kho • Lịch • HRM • API tùy chỉnh", fillcolor="#F3FFF8", color="#63C69F"];
+  analytics [label="DỮ LIỆU PHÂN TÍCH\nBI • Data Warehouse • KPI • Báo cáo", fillcolor="#FFF9ED", color="#E8B356"];
+  governance [label="QUẢN TRỊ CHUNG\nTenant • RBAC/ABAC • Audit • Secrets • Billing • Observability", fillcolor="#FAF7FF", color="#A48BDC"];
+  channels -> runtime;
+  runtime -> knowledge;
+  runtime -> tools;
+  runtime -> analytics;
+  governance -> runtime [style=dashed];
+  governance -> knowledge [style=dashed];
+  governance -> tools [style=dashed];
+  governance -> analytics [style=dashed];
+}
